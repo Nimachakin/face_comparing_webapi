@@ -29,6 +29,7 @@ namespace FaceRecognitionApi.Models
 
         public virtual ICollection<Person> Persons { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime UpdatedDate { get; set; }
     }
 }

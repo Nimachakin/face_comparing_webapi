@@ -23,7 +23,7 @@ namespace FaceRecognitionApi.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=psql1.ipt.fsin.uis;Port=5432;Database=wanted_database_migration;Username=korolyovio;Password=Qq123456");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=FacesStorage;Username=postgres;Password=user123");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,11 +37,6 @@ namespace FaceRecognitionApi.Models
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Description).HasMaxLength(256);
-
-                entity.Property(e => e.Discriminator)
-                    .IsRequired()
-                    .HasMaxLength(128)
-                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -107,11 +102,9 @@ namespace FaceRecognitionApi.Models
 
                 entity.Property(e => e.Initials).IsUnicode(false);
 
-                entity.Property(e => e.LockoutEndDateUtc).HasColumnType("datetime");
+                entity.Property(e => e.LockoutEndDateUtc).HasColumnType("date");
 
-                entity.Property(e => e.RegisterDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("('2016-01-01')");
+                entity.Property(e => e.RegisterDate).HasColumnType("date");
 
                 entity.Property(e => e.UserName)
                     .IsRequired()
@@ -120,7 +113,7 @@ namespace FaceRecognitionApi.Models
 
             modelBuilder.Entity<Person>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.Id);
 
                 entity.Property(e => e.BirthDate).HasColumnType("date");
 
@@ -128,11 +121,10 @@ namespace FaceRecognitionApi.Models
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.RemoveDate).HasColumnType("datetime");
+                entity.Property(e => e.RemoveDate).HasColumnType("date");
 
-                entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.UpdatedDate).HasColumnType("date")
+                    .HasDefaultValueSql("current_date");
             });
 
             modelBuilder.Entity<PhotoFace>(entity =>
@@ -143,7 +135,7 @@ namespace FaceRecognitionApi.Models
                     .HasName("UQ__Photo__FFEE743086D66C32")
                     .IsUnique();
 
-                entity.Property(e => e.PhotoId).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.PhotoId);
 
                 entity.Property(e => e.Description).IsUnicode(false);
 
@@ -151,20 +143,17 @@ namespace FaceRecognitionApi.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Photo).HasDefaultValueSql("(0x)");
+                entity.Property(e => e.RowId);
 
-                entity.Property(e => e.RowId).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.UpdatedDate).HasColumnType("date")
+                    .HasDefaultValueSql("current_date");
             });
 
             modelBuilder.Entity<PhotoFaceDescriptor>(entity =>
             {
                 entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.Id);
 
                 entity.Property(e => e.Descriptor)
                     .IsUnicode(false);
@@ -183,7 +172,7 @@ namespace FaceRecognitionApi.Models
                     .HasName("UQ_PK_PhotoProfile")
                     .IsUnique();
 
-                entity.Property(e => e.PhotoId).HasDefaultValueSql("(newid())");
+                entity.Property(e => e.PhotoId);
 
                 entity.Property(e => e.Description).IsUnicode(false);
 
@@ -191,13 +180,10 @@ namespace FaceRecognitionApi.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Photo).HasDefaultValueSql("(0x)");
+                entity.Property(e => e.RowId);
 
-                entity.Property(e => e.RowId).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.UpdatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.UpdatedDate).HasColumnType("date")
+                    .HasDefaultValueSql("current_date");
             });
         }
 

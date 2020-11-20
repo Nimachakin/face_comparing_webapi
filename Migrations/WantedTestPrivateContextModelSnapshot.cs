@@ -3,6 +3,7 @@ using System;
 using FaceRecognitionApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FaceRecognitionApi.Migrations
@@ -28,13 +29,6 @@ namespace FaceRecognitionApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("character varying(128)")
-                        .HasDefaultValueSql("('')")
-                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -77,7 +71,7 @@ namespace FaceRecognitionApi.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LockoutEndDateUtc")
-                        .HasColumnType("datetime");
+                        .HasColumnType("date");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -89,9 +83,7 @@ namespace FaceRecognitionApi.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("RegisterDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("('2016-01-01')");
+                        .HasColumnType("date");
 
                     b.Property<Guid?>("RequestedRoleId")
                         .HasColumnType("uuid");
@@ -178,8 +170,7 @@ namespace FaceRecognitionApi.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("date");
@@ -202,12 +193,12 @@ namespace FaceRecognitionApi.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("RemoveDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("current_date");
 
                     b.HasKey("Id");
 
@@ -218,8 +209,7 @@ namespace FaceRecognitionApi.Migrations
                 {
                     b.Property<Guid>("PhotoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -231,19 +221,15 @@ namespace FaceRecognitionApi.Migrations
                         .IsUnicode(false);
 
                     b.Property<byte[]>("Photo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bytea")
-                        .HasDefaultValueSql("(0x)");
+                        .HasColumnType("bytea");
 
                     b.Property<Guid>("RowId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("current_date");
 
                     b.HasKey("PhotoId");
 
@@ -258,8 +244,7 @@ namespace FaceRecognitionApi.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Descriptor")
                         .HasColumnType("text")
@@ -279,8 +264,7 @@ namespace FaceRecognitionApi.Migrations
                 {
                     b.Property<Guid>("PhotoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -292,19 +276,15 @@ namespace FaceRecognitionApi.Migrations
                         .IsUnicode(false);
 
                     b.Property<byte[]>("Photo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bytea")
-                        .HasDefaultValueSql("(0x)");
+                        .HasColumnType("bytea");
 
                     b.Property<Guid>("RowId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("current_date");
 
                     b.HasKey("PhotoId");
 

@@ -15,6 +15,7 @@ namespace FaceRecognitionApi.Models
         public string BirthPlace { get; set; }
         public Guid? PhotoFaceId { get; set; }
         public Guid? PhotoProfileId { get; set; }
+        [Column(TypeName = "date")]
         public DateTime? RemoveDate { get; set; }
         [Required]
         [Column(TypeName = "date")]

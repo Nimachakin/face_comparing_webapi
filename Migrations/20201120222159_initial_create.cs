@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FaceRecognitionApi.Migrations
 {
-    public partial class initial_db : Migration
+    public partial class initial_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,8 +18,7 @@ namespace FaceRecognitionApi.Migrations
                 {
                     Id = table.Column<Guid>(maxLength: 128, nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: false),
-                    Description = table.Column<string>(maxLength: 256, nullable: true),
-                    Discriminator = table.Column<string>(maxLength: 128, nullable: false, defaultValueSql: "('')")
+                    Description = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,14 +38,14 @@ namespace FaceRecognitionApi.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEndDateUtc = table.Column<DateTime>(type: "datetime", nullable: true),
+                    LockoutEndDateUtc = table.Column<DateTime>(type: "date", nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: false),
                     Initials = table.Column<string>(unicode: false, nullable: true),
                     ContactPhone = table.Column<string>(unicode: false, nullable: true),
                     RequestedRoleId = table.Column<Guid>(nullable: true),
-                    RegisterDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "('2016-01-01')"),
+                    RegisterDate = table.Column<DateTime>(type: "date", nullable: false),
                     IsBlocked = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -59,15 +58,15 @@ namespace FaceRecognitionApi.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
+                    Id = table.Column<Guid>(nullable: false),
                     IsDelete = table.Column<bool>(nullable: false),
                     Gender = table.Column<bool>(nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
                     BirthPlace = table.Column<string>(unicode: false, nullable: false),
                     PhotoFaceId = table.Column<Guid>(nullable: true),
                     PhotoProfileId = table.Column<Guid>(nullable: true),
-                    RemoveDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
+                    RemoveDate = table.Column<DateTime>(type: "date", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "current_date")
                 },
                 constraints: table =>
                 {
@@ -79,12 +78,12 @@ namespace FaceRecognitionApi.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    PhotoId = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    RowId = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
+                    PhotoId = table.Column<Guid>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(unicode: false, nullable: true),
-                    Photo = table.Column<byte[]>(nullable: true, defaultValueSql: "(0x)"),
+                    Photo = table.Column<byte[]>(nullable: true),
                     Mime = table.Column<string>(unicode: false, maxLength: 20, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
+                    UpdatedDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "current_date")
                 },
                 constraints: table =>
                 {
@@ -96,12 +95,12 @@ namespace FaceRecognitionApi.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    PhotoId = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
-                    RowId = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
+                    PhotoId = table.Column<Guid>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(unicode: false, nullable: true),
-                    Photo = table.Column<byte[]>(nullable: true, defaultValueSql: "(0x)"),
+                    Photo = table.Column<byte[]>(nullable: true),
                     Mime = table.Column<string>(unicode: false, maxLength: 20, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
+                    UpdatedDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "current_date")
                 },
                 constraints: table =>
                 {
@@ -184,7 +183,7 @@ namespace FaceRecognitionApi.Migrations
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
+                    Id = table.Column<Guid>(nullable: false),
                     PhotoFaceId = table.Column<Guid>(nullable: false),
                     Descriptor = table.Column<string>(unicode: false, nullable: true)
                 },
